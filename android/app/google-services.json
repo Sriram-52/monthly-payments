@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1030326147038",
+    "project_id": "monthly-payments-8903a",
+    "storage_bucket": "monthly-payments-8903a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030326147038:android:0aeb0a0e528a790cc96f4f",
+        "android_client_info": {
+          "package_name": "com.example.monthlypayments"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1030326147038-fqobe7o0turofdc6qv77j9li88qjcpud.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsFKUnHoW37Ytq7QcRGymVnofAOnNnV-M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1030326147038-fqobe7o0turofdc6qv77j9li88qjcpud.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
