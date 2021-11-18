@@ -3,12 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class PaymentModel {
   Timestamp? createdAt;
   String description;
+  String title;
   num rate;
   int quantity;
   String uId;
   Timestamp purchasedDate;
   String paymentMadeBy;
   String? id;
+  List users;
 
   PaymentModel({
     this.createdAt,
@@ -18,6 +20,8 @@ class PaymentModel {
     required this.quantity,
     required this.purchasedDate,
     required this.paymentMadeBy,
+    required this.users,
+    required this.title,
     this.id,
   });
 
@@ -29,6 +33,8 @@ class PaymentModel {
         purchasedDate = json["purchasedDate"],
         quantity = json["quantity"],
         paymentMadeBy = json["paymentMadeBy"],
+        users = json["users"],
+        title = json["title"],
         uId = json["uId"];
 
   Map<String, dynamic> toMap() {
@@ -40,6 +46,8 @@ class PaymentModel {
     map["uId"] = uId;
     map["purchasedDate"] = purchasedDate;
     map["paymentMadeBy"] = paymentMadeBy;
+    map["users"] = users;
+    map["title"] = title;
     return map;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:monthlypayments/constants/utils.dart';
 import 'package:monthlypayments/models/user_model.dart';
 
 class UsersService {
@@ -28,5 +29,9 @@ class UsersService {
         .orderBy('createdAt')
         .snapshots()
         .map(_usersFromFirebase);
+  }
+
+  String nameFromUid(String uId) {
+    return usersList.where((element) => element.uId == uId).first.fullName;
   }
 }

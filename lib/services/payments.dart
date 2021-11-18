@@ -27,6 +27,7 @@ class PaymentsService {
         .collection('PAYMENTS')
         .where('uId', isEqualTo: uId)
         .where('isExist', isEqualTo: true)
+        .orderBy('purchasedDate', descending: true)
         .snapshots()
         .map(_paymentsFromFirebase);
   }
