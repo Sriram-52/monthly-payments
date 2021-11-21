@@ -1,15 +1,11 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:monthlypayments/constants/formatters.dart';
+import 'package:monthlypayments/common/Loading.dart';
 import 'package:monthlypayments/constants/styles.dart';
 import 'package:monthlypayments/models/payment_model.dart';
-import 'package:monthlypayments/models/user_model.dart';
 import 'package:monthlypayments/screens/add_menu.dart';
-import 'package:monthlypayments/screens/add_user.dart';
 import 'package:monthlypayments/screens/drawer.dart';
-import 'package:monthlypayments/screens/payment_card.dart';
+import 'package:monthlypayments/screens/sort_payments.dart';
 import 'package:monthlypayments/services/payments.dart';
-import 'package:monthlypayments/services/users.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -51,57 +47,22 @@ class _HomePageState extends State<HomePage> {
                   stream: _paymentsService.getPayments(selectedUser),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting)
-                      return Center(child: CircularProgressIndicator());
+                      return Loading();
                     final payments = snapshot.data ?? [];
 
-                    final paymentsByDate = groupBy(
-                      payments,
-                      (PaymentModel payment) => Formatters.timeStampToDate(
-                        payment.purchasedDate,
-                      ),
-                    );
-
-                    num total = 0;
-                    payments.forEach((element) {
-                      total += element.rate * element.quantity;
-                    });
-
-                    List<Widget> _children = [];
-
-                    paymentsByDate.forEach((date, list) {
-                      _children.add(
-                        Container(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.only(bottom: 5),
-                                child: Text(
-                                  date,
-                                  style: Styles.subTitleStyle,
-                                ),
-                              ),
-                              ...list.map((payment) => PaymentCard(payment: payment)).toList()
-                            ],
-                          ),
-                        ),
-                      );
-                    });
-
-                    return ListView(
+                    return Column(
                       children: [
                         Container(
                           alignment: Alignment.bottomRight,
                           child: Text(
-                            'Total: $total',
+                            'Total: ${_paymentsService.getTotal(payments)}',
                             style: Styles.titleStyle,
                           ),
                         ),
-                        ..._children,
-                        Container(
-                          margin: EdgeInsets.only(bottom: 100),
+                        Expanded(
+                          child: SortPaymentsByDate(payments: payments),
                         ),
+                        
                       ],
                     );
                   },

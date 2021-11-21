@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:monthlypayments/constants/utils.dart';
 import 'package:monthlypayments/models/payment_model.dart';
 import 'package:monthlypayments/services/users.dart';
 
 class PaymentCard extends StatefulWidget {
   final PaymentModel payment;
+  final bool? isShare;
 
-  PaymentCard({required this.payment});
+  PaymentCard({
+    required this.payment,
+    this.isShare,
+  });
 
   @override
   _PaymentCardState createState() => _PaymentCardState();
@@ -96,7 +99,9 @@ class _PaymentCardState extends State<PaymentCard> {
           expandedAlignment: Alignment.centerLeft,
           title: Text(payment.title),
           children: [_buildChildren()],
-          trailing: Text('${payment.rate}'),
+          trailing: widget.isShare == true
+              ? Text('${(payment.rate / payment.users.length).ceilToDouble()}')
+              : Text('${payment.rate}'),
         ),
       ),
     );

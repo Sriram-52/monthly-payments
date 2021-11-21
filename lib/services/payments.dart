@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
+import 'package:monthlypayments/constants/formatters.dart';
 import 'package:monthlypayments/models/payment_model.dart';
 
 class PaymentsService {
@@ -30,5 +32,43 @@ class PaymentsService {
         .orderBy('purchasedDate', descending: true)
         .snapshots()
         .map(_paymentsFromFirebase);
+  }
+
+  Stream<List<PaymentModel>> getSelectedPayments(String uId) {
+    return _firebaseFirestore
+        .collection('PAYMENTS')
+        .where('users', arrayContainsAny: [uId])
+        .where('isExist', isEqualTo: true)
+        .orderBy('purchasedDate', descending: true)
+        .snapshots()
+        .map(_paymentsFromFirebase);
+  }
+
+  Stream<List<PaymentModel>> getPaymentsMadeByUser(String uId) {
+    return _firebaseFirestore
+        .collection('PAYMENTS')
+        .where('paymentMadeBy', isEqualTo: uId)
+        .orderBy('purchasedDate', descending: true)
+        .snapshots()
+        .map(_paymentsFromFirebase);
+  }
+
+  Map<String, List<PaymentModel>> getPaymentsByDate(List<PaymentModel> payments) {
+    return groupBy(
+      payments,
+      (PaymentModel payment) => Formatters.timeStampToDate(
+        payment.purchasedDate,
+      ),
+    );
+  }
+
+  num getTotal(List<PaymentModel> payments) {
+    num total = 0;
+
+    payments.forEach((element) {
+      total += element.rate;
+    });
+
+    return total;
   }
 }
