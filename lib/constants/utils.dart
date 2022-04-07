@@ -2,8 +2,8 @@ import 'package:monthlypayments/models/user_model.dart';
 
 final usersList = [
   UserModel(
-    fullName: "Sriram",
-    uId: "wyCJA4akvInqijPuE7jG",
+    fullName: "Kalyan",
+    uId: "pt6twRiCWNj9QgdqKLdF",
   ),
   UserModel(
     fullName: "Vamsi",
