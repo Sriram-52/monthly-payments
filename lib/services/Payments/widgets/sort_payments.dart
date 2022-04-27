@@ -1,16 +1,19 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:monthlypayments/constants/formatters.dart';
 import 'package:monthlypayments/constants/styles.dart';
-import 'package:monthlypayments/models/payment_model.dart';
-import 'package:monthlypayments/screens/payment_card.dart';
-import 'package:monthlypayments/services/payments.dart';
+import 'payment_card.dart';
+import '../model/payment.dart';
 
 class SortPaymentsByDate extends StatefulWidget {
   final List<PaymentModel> payments;
   final bool? isShare;
+  final bool? isEdit;
 
   SortPaymentsByDate({
     required this.payments,
     this.isShare,
+    this.isEdit,
   });
 
   @override
@@ -18,11 +21,18 @@ class SortPaymentsByDate extends StatefulWidget {
 }
 
 class _SortPaymentsByDateState extends State<SortPaymentsByDate> {
-  final PaymentsService _paymentsService = PaymentsService();
+  Map<String, List<PaymentModel>> _getPaymentsByDate(List<PaymentModel> payments) {
+    return groupBy(
+      payments,
+      (PaymentModel payment) => Formatters.timeStampToDate(
+        payment.purchasedDate,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final paymentsByDate = _paymentsService.getPaymentsByDate(widget.payments);
+    final paymentsByDate = _getPaymentsByDate(widget.payments);
     List<Widget> _children = [];
 
     paymentsByDate.forEach((date, list) {
@@ -43,6 +53,7 @@ class _SortPaymentsByDateState extends State<SortPaymentsByDate> {
                   .map((payment) => PaymentCard(
                         payment: payment,
                         isShare: widget.isShare,
+                        isEdit: widget.isEdit,
                       ))
                   .toList(),
             ],

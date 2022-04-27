@@ -9,7 +9,7 @@ class UserModel {
 
   UserModel.fromJson(Map<String, dynamic> json)
       : fullName = json["fullName"],
-        uId = json["uId"];
+        uId = json["id"];
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {};

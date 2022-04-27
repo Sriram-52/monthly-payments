@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:monthlypayments/screens/shares.dart';
+import 'package:monthlypayments/services/Users/widgets/all_users.dart';
+import '../../services/Payments/widgets/payment_details.dart';
 
 class UserDrawer extends StatefulWidget {
   const UserDrawer({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _UserDrawerState extends State<UserDrawer> {
           DrawerHeader(
             child: Center(
               child: Text(
-                'Monthly payments',
+                'Expenses',
               ),
             ),
             decoration: BoxDecoration(
@@ -30,10 +31,20 @@ class _UserDrawerState extends State<UserDrawer> {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Shares()),
+                MaterialPageRoute(builder: (context) => PaymentDetails()),
               );
             },
-            title: Text('Shares'),
+            title: Text('Payment Details'),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AllUsers()),
+              );
+            },
+            title: Text('Users'),
           ),
         ],
       ),
