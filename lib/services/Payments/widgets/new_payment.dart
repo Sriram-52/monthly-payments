@@ -144,7 +144,7 @@ class _NewPaymentState extends State<NewPayment> with BaseWidgets {
                           decoration: Styles.inputDecoration.copyWith(hintText: "Purchased Date"),
                           selectedDate: purchasedDate,
                           mode: DateTimeFieldPickerMode.date,
-                          enabled: widget.isEdit,
+                          enabled: !widget.isEdit,
                         ),
                       ),
                       Container(
